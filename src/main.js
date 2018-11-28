@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import './plugins/element.js'
+
+import 'common/stylus/reset.css'
 
 Vue.config.productionTip = false
 
