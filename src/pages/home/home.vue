@@ -76,6 +76,12 @@
                 if (index === 2) {
                     this.$router.push({path: '/spare'})
                 }
+                if (index === 3) {
+                    this.$router.push({path: '/ledger'})
+                }
+                if (index === 7) {
+                    this.$router.push({path: '/stats'})
+                }
             }
         },
         components: {VHeader, VFooter}

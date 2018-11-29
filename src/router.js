@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from 'pages/login/login.vue'
 import Home from 'pages/home/home.vue'
+import ChangePassword from 'pages/change-password/change-password.vue'
 import Info from 'pages/info/info.vue'
 import Archives from 'pages/archives/archives.vue'
 import ArchivesAdd from 'pages/archives-add/archives-add.vue'
@@ -16,6 +17,15 @@ import EngineerAdd from 'pages/engineer-add/engineer-add.vue'
 import Spare from 'pages/spare/spare.vue'
 import SpareAdd from 'pages/spare-add/spare-add.vue'
 import SpareDetail from 'pages/spare-detail/spare-detail.vue'
+import Ledger from 'pages/ledger/ledger.vue'
+import Assign from 'pages/assign/assign.vue'
+import AssignPerson from 'pages/assign-person/assign-person.vue'
+import Track from 'pages/track/track.vue'
+import Typein from 'pages/typein/typein.vue'
+import Replenish from 'pages/replenish/replenish.vue'
+import Finish from 'pages/finish/finish.vue'
+import Stats from 'pages/stats/stats.vue'
+import StatsOps from 'pages/stats-ops/stats-ops.vue'
 
 Vue.use(Router)
 
@@ -30,6 +40,10 @@ export default new Router({
     {
         path: '/home',
         component: Home
+    },
+    {
+      path: '/changePassword',
+      component: ChangePassword
     },
     {
       path: '/info',
@@ -86,6 +100,42 @@ export default new Router({
     {
       path: '/spareDetail/:id',
       component: SpareDetail
+    },
+    {
+      path: '/ledger',
+      component: Ledger
+    },
+    {
+      path: '/assign',
+      component: Assign
+    },
+    {
+      path: '/assignPerson/:id',
+      component: AssignPerson
+    },
+    {
+      path: '/track/:id',
+      component: Track
+    },
+    {
+      path: '/typein',
+      component: Typein
+    },
+    {
+      path: '/replenish',
+      component: Replenish
+    },
+    {
+      path: '/finish',
+      component: Finish
+    },
+    {
+      path: '/stats',
+      component: Stats
+    },
+    {
+      path: '/statsOps',
+      component: StatsOps
     }
   ]
 })

@@ -140,7 +140,6 @@
                     }
                 ],
                 totalNum: 200,
-                dialogVisible: false,
                 index: 0,
                 list: {}
             }

@@ -60,70 +60,80 @@
                         number: 1001,
                         title: "太阳能三角板",
                         count: 888,
-                        remain: 333
-                    },
-                    {
-                        name: "唯行科技",
-                        number: 1002,
-                        title: "太阳能三角板",
-                        count: 888,
-                        remain: 333
-                    },
-                    {
-                        name: "唯行科技",
-                        number: 1003,
-                        title: "太阳能三角板",
-                        count: 888,
-                        remain: 333
+                        person: "陈楚",
+                        time: "2018-09-11"
                     },
                     {
                         name: "唯行科技",
                         number: 1001,
                         title: "太阳能三角板",
                         count: 888,
-                        remain: 333
+                        person: "陈楚",
+                        time: "2018-09-11"
                     },
                     {
                         name: "唯行科技",
                         number: 1001,
                         title: "太阳能三角板",
                         count: 888,
-                        remain: 333
+                        person: "陈楚",
+                        time: "2018-09-11"
                     },
                     {
                         name: "唯行科技",
                         number: 1001,
                         title: "太阳能三角板",
                         count: 888,
-                        remain: 333
+                        person: "陈楚",
+                        time: "2018-09-11"
                     },
                     {
                         name: "唯行科技",
                         number: 1001,
                         title: "太阳能三角板",
                         count: 888,
-                        remain: 333
+                        person: "陈楚",
+                        time: "2018-09-11"
                     },
                     {
                         name: "唯行科技",
                         number: 1001,
                         title: "太阳能三角板",
                         count: 888,
-                        remain: 333
+                        person: "陈楚",
+                        time: "2018-09-11"
                     },
                     {
                         name: "唯行科技",
                         number: 1001,
                         title: "太阳能三角板",
                         count: 888,
-                        remain: 333
+                        person: "陈楚",
+                        time: "2018-09-11"
                     },
                     {
                         name: "唯行科技",
                         number: 1001,
                         title: "太阳能三角板",
                         count: 888,
-                        remain: 333
+                        person: "陈楚",
+                        time: "2018-09-11"
+                    },
+                    {
+                        name: "唯行科技",
+                        number: 1001,
+                        title: "太阳能三角板",
+                        count: 888,
+                        person: "陈楚",
+                        time: "2018-09-11"
+                    },
+                    {
+                        name: "唯行科技",
+                        number: 1001,
+                        title: "太阳能三角板",
+                        count: 888,
+                        person: "陈楚",
+                        time: "2018-09-11"
                     }
                 ],
                 totalNum: 200,

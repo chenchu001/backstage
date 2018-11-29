@@ -1,77 +1,63 @@
 <template>
-    <div class="engineer-add">
+    <div class="replenish">
         <v-header></v-header>
-        <div class="add-content">
-            <div class="add-title">
+        <div class="replenish-content">
+            <div class="replenish-title">
                 <span class="breadcrumb-text">当前位置：</span>
                 <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb-list">
                     <el-breadcrumb-item :to="{ path: '/home' }">管理员首页</el-breadcrumb-item>
-                    <el-breadcrumb-item><router-link :to="{ path: '/engineer' }">运营工程师管理</router-link></el-breadcrumb-item>
-                    <el-breadcrumb-item>录入运维工程师</el-breadcrumb-item>
+                    <el-breadcrumb-item><router-link :to="{ path: '/ledger' }">运维台账</router-link></el-breadcrumb-item>
+                    <el-breadcrumb-item><router-link :to="{ path: '/assign' }">指派工作任务</router-link></el-breadcrumb-item>
+                    <el-breadcrumb-item>补录工作轨迹</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
-            <div class="add-main">
-                <div class="add-caption">录入运维工程师</div>
-                <div class="add-form">
+            <div class="replenish-main">
+                <div class="replenish-caption">补录工作轨迹</div>
+                <div class="replenish-form">
                     <div class="form-dialog">
-                        <div class="form-name">
-                            <span class="text">姓名</span>
-                            <el-input class="input" v-model="inputName" placeholder="请输入姓名"></el-input>
-                        </div>
-                        <div class="form-number">
-                            <span class="text">工号</span>
-                            <el-input class="input" v-model="inputNumber" placeholder="请输入工号"></el-input>
-                        </div>
-                        <div class="form-duty">
-                            <span class="text">当前职务</span>
-                            <el-input class="input" v-model="inputDuty" placeholder="请输入职务"></el-input>
-                        </div>
-                        <div class="form-phone">
-                            <span class="text">常用电话</span>
-                            <el-input class="input" v-model="inputPhone" placeholder="请输入电话"></el-input>
-                        </div>
-                        <div class="form-phone-one">
-                            <span class="text">紧急联系电话</span>
-                            <el-input class="input" v-model="inputPhoneOne" placeholder="请输入紧急联系电话"></el-input>
-                        </div>
-                        <div class="form-sex">
-                            <span class="text">性别</span>
-                            <div class="input-drop" @click="handleClickSex">
-                                <span class="text">{{defaultSex}}</span>
+                        <!-- 工作任务选择 -->
+                        <div class="form-firm">
+                            <span class="text">工作任务选择</span>
+                            <div class="input-drop" @click="handleClickDrop">
+                                <span class="text">{{defaultDrop}}</span>
                                 <i class="el-icon-arrow-down icon-drop"></i>
                                 <transition name="fade">
                                     <ul class="drop-item" v-show="dropShow">
-                                        <li class="drop-list" @click.stop="handleClickSexList(index)" v-for="(item, index) in sexArr">{{item}}</li>
+                                        <li class="drop-list" @click.stop="handleClickDropList(index)" v-for="(item, index) in firmArr">{{item}}</li>
                                     </ul>
                                 </transition>
                             </div>
                         </div>
-                        <div class="form-card">
-                            <span class="text">身份证号码</span>
-                            <el-input class="input" v-model="inputCard" placeholder="请输入身份证号码"></el-input>
+                        <!-- 工作任务状态 -->
+                        <div class="form-status">
+                            <span class="text">工作任务状态</span>
+                            <div class="input-drop" @click="handleClickStatus">
+                                <span class="text">{{defaultStatus}}</span>
+                                <i class="el-icon-arrow-down icon-drop"></i>
+                                <transition name="fade">
+                                    <ul class="drop-item" v-show="statusShow">
+                                        <li class="drop-list" @click.stop="handleClickStatusList(index)" v-for="(item, index) in statusArr">{{item}}</li>
+                                    </ul>
+                                </transition>
+                            </div>
                         </div>
-                        <div class="form-year">
-                            <span class="text">工作年限</span>
-                            <el-input-number class="input-year" v-model="inputYear" @change="handleChange" :min="1" :max="30"></el-input-number>
-                        </div>
-                        <div class="form-pic">
-                            <span class="text">照片</span>
-                            <el-upload
+                        <!-- 工作完成时间 -->
+                        <div class="form-date">
+                            <span class="text">工作完成时间</span>
+                            <el-date-picker
                                 class="input"
-                                action="https://jsonplaceholder.typicode.com/posts/"
-                                list-type="picture-card"
-                                :limit=1
-                                :on-preview="handlePictureCardPreview"
-                                :on-remove="handleRemove"
-                                :on-success="handleUploadSuccess">
-                                <i class="el-icon-plus"></i>
-                            </el-upload>
-                            <el-dialog :visible.sync="dialogVisible">
-                                <img width="100%" :src="dialogImageUrl" alt="">
-                            </el-dialog>
+                                v-model="inputDate"
+                                type="date"
+                                placeholder="请选择完成时间">
+                            </el-date-picker>
+                        </div>
+                        <!-- 工作轨迹备注 -->
+                        <div class="form-hint">
+                            <span class="text">工作轨迹备注</span>
+                            <el-input class="input" v-model="inputHint" placeholder="请输入工作轨迹备注"></el-input>
                         </div>
                         <el-row class="form-btn">
-                            <el-button type="info">取消</el-button>
+                            <el-button type="info" @click="handleClickCancel">取消</el-button>
                             <el-button type="success" @click="handleClickSave">保存</el-button>
                         </el-row>
                     </div>
@@ -87,47 +73,44 @@
     import VFooter from 'base/v-footer/v-footer'
 
     export default {
-        name: 'engineer-add',
+        name: "replenish",
         data () {
             return {
-                sexArr: ["男", "女"],
-                defaultSex: "男",
+                firmArr: ["企业名称001", "企业名称002", "企业名称003"],
+                statusArr: ["常规设备检测","复杂设备检查","异常设备修复"],
+                defaultDrop: "",
+                defaultStatus: "",
                 dropShow: false,
-                inputName: "",
-                inputNumber: "",
-                inputDuty: "",
-                inputPhone: "",
-                inputPhoneOne: "",
-                inputYear: "",
-                inputCard: "",
-                dialogImageUrl: "",
-                dialogVisible: false
+                statusShow: false,
+                inputDate: "",
+                inputHint: ""
             }
         },
         methods: {
-            handleClickSex () {
+            handleClickDrop () {
                 this.dropShow = !this.dropShow
             },
-            handleClickSexList (index) {
-                this.defaultSex = this.sexArr[index]
+            handleClickStatus () {
+                this.statusShow = !this.statusShow
+            },
+            handleClickDropList (index) {
+                this.defaultDrop = this.firmArr[index]
                 this.dropShow = false
             },
-            handleChange (value) {
+            handleClickStatusList (index) {
+                this.defaultStatus= this.statusArr[index]
+                this.statusShow = false
+            },
+            handleClickCancel () {
 
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList)
-            },
-            handlePictureCardPreview(file) {
-                this.dialogImageUrl = file.url
-                this.dialogVisible = true
-            },
-            handleUploadSuccess (res, file) {
-                console.log(file)
             },
             handleClickSave () {
 
             }
+        },
+        mounted () {
+            this.defaultDrop = this.firmArr[0]
+            this.defaultStatus = this.statusArr[0]
         },
         components: {VHeader, VFooter}
     }
@@ -137,12 +120,12 @@
     .breadcrumb-list >>> .el-breadcrumb__inner, .breadcrumb-list >>> .el-breadcrumb__inner, .breadcrumb-list >>> a
         color: #b8b8b8 !important
         font-weight: 400 !important
-    
-    .engineer-add
-        .add-content
+        
+    .replenish
+        .replenish-content
             width: 1135px
             margin: 0 auto
-            .add-title
+            .replenish-title
                 width: 100%
                 margin-top: 40px
                 margin-bottom: 60px
@@ -155,9 +138,9 @@
                     display: inline-block
                     vertical-align: middle
                     font-size: 14px
-            .add-main
+            .replenish-main
                 width: 100%
-                .add-caption
+                .replenish-caption
                     width: 100%
                     height: 44px
                     line-height: 44px
@@ -166,16 +149,16 @@
                     box-sizing: border-box
                     color: #fff
                     background: #427309
-                .add-form
+                .replenish-form
                     width: 100%
                     border: 1px solid #5aa300
-                    padding-bottom: 60px
+                    height: 490px
                     box-sizing: border-box
                     margin-bottom: 280px
                     .form-dialog
                         width: 510px
-                        margin: 20px auto 0
-                        .form-number,.form-name,.form-duty,.form-phone,.form-phone-one,.form-year,.form-card,.form-pic
+                        margin: 40px auto 0
+                        .form-date, .form-hint
                             width: 100%
                             display: flex
                             align-items: center
@@ -188,9 +171,11 @@
                             .input
                                 flex: 1
                                 margin-left: 20px
-                            .input-year
-                                margin-left: 20px
-                        .form-sex
+                        .form-btn
+                            margin-top: 30px
+                            width: 100%
+                            text-align: center
+                        .form-firm,.form-status
                             width: 100%
                             height: 40px
                             display: flex
@@ -214,6 +199,7 @@
                                 justify-content: space-between
                                 align-items: center
                                 cursor: pointer
+                                background: #fff
                                 .text
                                     text-align: left
                                     font-size: 14px
@@ -226,6 +212,7 @@
                                     width: 100%
                                     left: -1px
                                     border: 1px solid rgba(7, 17, 27, .1)
+                                    // border-top: none
                                     transition: all .3s
                                     z-index: 99
                                     background: #fff
@@ -244,8 +231,4 @@
                                         border-bottom: 1px solid rgba(7, 17, 27, .1)
                                         &:last-child
                                             border-bottom: none
-                        .form-btn
-                            margin-top: 80px
-                            width: 100%
-                            text-align: center
 </style>

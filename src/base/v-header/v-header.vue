@@ -7,15 +7,25 @@
             <span class="name">李建国</span>，欢迎登陆南北西东环保系统...
         </div>
         <div class="right">
-            <a href="javascript:;" class="right-quit"></a>
-            <a href="javascript:;" class="right-change"></a>
+            <a href="javascript:;" class="right-quit" @click="handleClickChange"></a>
+            <a href="javascript:;" class="right-change" @click="handleClickQuit"></a>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "v-header"
+        name: "v-header",
+        methods: {
+            // 修改密码
+            handleClickChange () {
+                this.$router.push({path: '/changePassword'})
+            },
+            // 退出登录
+            handleClickQuit () {
+
+            }
+        }
     }
 </script>
 

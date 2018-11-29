@@ -1,74 +1,51 @@
 <template>
-    <div class="engineer-add">
+    <div class="assign-person">
         <v-header></v-header>
-        <div class="add-content">
-            <div class="add-title">
+        <div class="person-content">
+            <div class="person-title">
                 <span class="breadcrumb-text">当前位置：</span>
                 <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb-list">
                     <el-breadcrumb-item :to="{ path: '/home' }">管理员首页</el-breadcrumb-item>
-                    <el-breadcrumb-item><router-link :to="{ path: '/engineer' }">运营工程师管理</router-link></el-breadcrumb-item>
-                    <el-breadcrumb-item>录入运维工程师</el-breadcrumb-item>
+                    <el-breadcrumb-item><router-link :to="{ path: '/ledger' }">运维台账</router-link></el-breadcrumb-item>
+                    <el-breadcrumb-item><router-link :to="{ path: '/assign' }">指派工作任务</router-link></el-breadcrumb-item>
+                    <el-breadcrumb-item>指派任务</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
-            <div class="add-main">
-                <div class="add-caption">录入运维工程师</div>
-                <div class="add-form">
+            <div class="person-main">
+                <div class="person-caption">指派任务</div>
+                <div class="person-form">
                     <div class="form-dialog">
-                        <div class="form-name">
-                            <span class="text">姓名</span>
-                            <el-input class="input" v-model="inputName" placeholder="请输入姓名"></el-input>
+                        <div class="form-item1">
+                            <span class="text">企业名称</span>
+                            <span class="text-right">{{personList.inputName}}</span>
                         </div>
-                        <div class="form-number">
-                            <span class="text">工号</span>
-                            <el-input class="input" v-model="inputNumber" placeholder="请输入工号"></el-input>
+                        <div class="form-item1">
+                            <span class="text">工作描述</span>
+                            <span class="text-right">{{personList.inputDescription}}</span>
                         </div>
-                        <div class="form-duty">
-                            <span class="text">当前职务</span>
-                            <el-input class="input" v-model="inputDuty" placeholder="请输入职务"></el-input>
+                        <div class="form-item1">
+                            <span class="text">具体内容</span>
+                            <span class="text-right">{{personList.inputContent}}</span>
                         </div>
-                        <div class="form-phone">
-                            <span class="text">常用电话</span>
-                            <el-input class="input" v-model="inputPhone" placeholder="请输入电话"></el-input>
+                        <div class="form-item1">
+                            <span class="text">安排日期</span>
+                            <span class="text-right">{{personList.inputTime}}</span>
                         </div>
-                        <div class="form-phone-one">
-                            <span class="text">紧急联系电话</span>
-                            <el-input class="input" v-model="inputPhoneOne" placeholder="请输入紧急联系电话"></el-input>
+                        <div class="form-item1">
+                            <span class="text">工作地址</span>
+                            <span class="text-right">{{personList.inputAddress}}</span>
                         </div>
-                        <div class="form-sex">
-                            <span class="text">性别</span>
-                            <div class="input-drop" @click="handleClickSex">
-                                <span class="text">{{defaultSex}}</span>
+                        <div class="form-person">
+                            <span class="text">指派运维人员</span>
+                            <div class="input-drop" @click="handleClickDrop">
+                                <span class="text">{{defaultPerson}}</span>
                                 <i class="el-icon-arrow-down icon-drop"></i>
                                 <transition name="fade">
                                     <ul class="drop-item" v-show="dropShow">
-                                        <li class="drop-list" @click.stop="handleClickSexList(index)" v-for="(item, index) in sexArr">{{item}}</li>
+                                        <li class="drop-list" @click.stop="handleClickDropList(index)" v-for="(item, index) in personList.personArr">{{item}}</li>
                                     </ul>
                                 </transition>
                             </div>
-                        </div>
-                        <div class="form-card">
-                            <span class="text">身份证号码</span>
-                            <el-input class="input" v-model="inputCard" placeholder="请输入身份证号码"></el-input>
-                        </div>
-                        <div class="form-year">
-                            <span class="text">工作年限</span>
-                            <el-input-number class="input-year" v-model="inputYear" @change="handleChange" :min="1" :max="30"></el-input-number>
-                        </div>
-                        <div class="form-pic">
-                            <span class="text">照片</span>
-                            <el-upload
-                                class="input"
-                                action="https://jsonplaceholder.typicode.com/posts/"
-                                list-type="picture-card"
-                                :limit=1
-                                :on-preview="handlePictureCardPreview"
-                                :on-remove="handleRemove"
-                                :on-success="handleUploadSuccess">
-                                <i class="el-icon-plus"></i>
-                            </el-upload>
-                            <el-dialog :visible.sync="dialogVisible">
-                                <img width="100%" :src="dialogImageUrl" alt="">
-                            </el-dialog>
                         </div>
                         <el-row class="form-btn">
                             <el-button type="info">取消</el-button>
@@ -87,47 +64,35 @@
     import VFooter from 'base/v-footer/v-footer'
 
     export default {
-        name: 'engineer-add',
+        name: "assign-person",
         data () {
             return {
-                sexArr: ["男", "女"],
-                defaultSex: "男",
+                personList: {
+                    inputName: "企业名称01",
+                    inputDescription: "检查氨氮自动监测仪",
+                    inputContent: "检查测试氨氮监测仪是否运行正常，数据监测是否异常",
+                    inputTime: "2018-11-25",
+                    inputAddress: "武汉光谷",
+                    personArr: ["张三", "李四", "王五", "赵六"]
+                },
                 dropShow: false,
-                inputName: "",
-                inputNumber: "",
-                inputDuty: "",
-                inputPhone: "",
-                inputPhoneOne: "",
-                inputYear: "",
-                inputCard: "",
-                dialogImageUrl: "",
-                dialogVisible: false
+                defaultPerson: ""
             }
         },
         methods: {
-            handleClickSex () {
+            handleClickDrop () {
                 this.dropShow = !this.dropShow
             },
-            handleClickSexList (index) {
-                this.defaultSex = this.sexArr[index]
+            handleClickDropList (index) {
+                this.defaultPerson = this.personList.personArr[index]
                 this.dropShow = false
             },
-            handleChange (value) {
-
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList)
-            },
-            handlePictureCardPreview(file) {
-                this.dialogImageUrl = file.url
-                this.dialogVisible = true
-            },
-            handleUploadSuccess (res, file) {
-                console.log(file)
-            },
             handleClickSave () {
-
+                
             }
+        },
+        mounted () {
+            this.defaultPerson = this.personList.personArr[0]
         },
         components: {VHeader, VFooter}
     }
@@ -137,12 +102,12 @@
     .breadcrumb-list >>> .el-breadcrumb__inner, .breadcrumb-list >>> .el-breadcrumb__inner, .breadcrumb-list >>> a
         color: #b8b8b8 !important
         font-weight: 400 !important
-    
-    .engineer-add
-        .add-content
+        
+    .assign-person
+        .person-content
             width: 1135px
             margin: 0 auto
-            .add-title
+            .person-title
                 width: 100%
                 margin-top: 40px
                 margin-bottom: 60px
@@ -155,9 +120,9 @@
                     display: inline-block
                     vertical-align: middle
                     font-size: 14px
-            .add-main
+            .person-main
                 width: 100%
-                .add-caption
+                .person-caption
                     width: 100%
                     height: 44px
                     line-height: 44px
@@ -166,31 +131,32 @@
                     box-sizing: border-box
                     color: #fff
                     background: #427309
-                .add-form
+                .person-form
                     width: 100%
                     border: 1px solid #5aa300
-                    padding-bottom: 60px
+                    height: 490px
                     box-sizing: border-box
                     margin-bottom: 280px
                     .form-dialog
                         width: 510px
-                        margin: 20px auto 0
-                        .form-number,.form-name,.form-duty,.form-phone,.form-phone-one,.form-year,.form-card,.form-pic
+                        margin: 40px auto 0
+                        .form-item1
                             width: 100%
                             display: flex
                             align-items: center
-                            margin-bottom: 15px
+                            margin-bottom: 25px
                             .text
                                 width: 90px
                                 flex: 0 0 90px
                                 text-align: right
                                 font-size: 14px
-                            .input
+                                color: #2c2c2c
+                            .text-right
+                                font-size: 14px
                                 flex: 1
                                 margin-left: 20px
-                            .input-year
-                                margin-left: 20px
-                        .form-sex
+                                color: #2c2c2c
+                        .form-person
                             width: 100%
                             height: 40px
                             display: flex
@@ -226,6 +192,7 @@
                                     width: 100%
                                     left: -1px
                                     border: 1px solid rgba(7, 17, 27, .1)
+                                    // border-top: none
                                     transition: all .3s
                                     z-index: 99
                                     background: #fff
@@ -245,7 +212,7 @@
                                         &:last-child
                                             border-bottom: none
                         .form-btn
-                            margin-top: 80px
+                            margin-top: 60px
                             width: 100%
                             text-align: center
 </style>
