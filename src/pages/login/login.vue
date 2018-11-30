@@ -13,7 +13,7 @@
                     <i class="username-icon"></i>
                 </div>
                 <div class="input-password">
-                    <el-input placeholder="请输入您的密码" v-model="password"></el-input>
+                    <el-input type="password" placeholder="请输入您的密码" v-model="password"></el-input>
                     <i class="password-icon"></i>
                 </div>
                 <i class="login-btn" @click="login"></i>
@@ -23,6 +23,9 @@
 </template>
 
 <script>
+    import axios from 'axios'
+    import {post, showDialog} from 'common/js/https.js'
+
     export default {
         name: "login",
         data () {
@@ -33,24 +36,23 @@
         },
         methods: {
             login () {
+                const that = this
                 if (this.username === "") {
-                    this.$message({
-                        message: '用户名不能为空！',
-                        type: 'error'
-                    })
+                    showDialog(that, '用户名不能为空', 'error')
                     return
                 }
                 if (this.password === "") {
-                    this.$message({
-                        message: '密码不能为空！',
-                        type: 'error'
-                    })
+                    showDialog(that, '密码不能为空', 'error')
                     return
                 }
-                this.$message({
-                    message: '登陆成功！',
-                    type: 'success'
+                // 请求函数
+                post('/api/index.php?g=Api&m=Ucenter&a=getuserinfo',{
+                    openid: localStorage.getItem("openid"),
+                    mid: localStorage.getItem("memberid")
+                }).then((res) => {
+                    
                 })
+                showDialog(that, '登陆成功', 'success')
             }
         }
     }
@@ -69,7 +71,7 @@
             left: 0
             right: 0
             text-align: center
-            top: 10%
+            top: 14%
             .title
                 font-size: 26px
                 color: #666
@@ -84,7 +86,7 @@
             position: absolute
             left: 50%
             margin-left: -265px
-            top: 30%
+            top: 36%
             box-shadow: 2px 2px 8px 0 rgba(7,17,27,.1)
             .form-title
                 width: 100%

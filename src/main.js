@@ -4,6 +4,7 @@ import router from './router'
 import './plugins/element.js'
 
 import 'common/stylus/reset.css'
+import 'common/stylus/media.css'
 
 Vue.config.productionTip = false
 
